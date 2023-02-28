@@ -1,0 +1,44 @@
+type QueryResolver {
+customers : [Customer]
+}
+
+type MutationResolver {
+    createCustomer(input : CustomerInput):Customer
+}
+type Customer {
+    name: String,
+    gender: String,
+    mail: String,
+    tel: String,
+    accounts: [Account]
+}
+
+type Account{
+    id: Int,
+    number: Int,
+    balance: Float,
+    accountStatus: AccountStatus
+}
+
+input CustomerInput{
+    name: String,
+    gender: String,
+    mail: String,
+    tel: String,
+    accounts: [AccountInput]
+}
+
+input AccountInput{
+    number: Int,
+    balance: Float,
+    accountStatus: AccountStatus
+}
+
+enum AccountStatus{
+    ACTIVE, INACTIVE, CLOSED
+}
+
+schema {
+    mutation: MutationResolver,
+    query: QueryResolver
+}
