@@ -1,15 +1,15 @@
 package com.example.demo.api;
 
-import com.example.demo.dto.CustomerInput;
-import com.example.demo.entity.Account;
 import com.example.demo.entity.Customer;
+import com.example.demo.generated.types.CustomerEdit;
+import com.example.demo.generated.types.CustomerInput;
 import com.example.demo.services.CustomerServices;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.netflix.graphql.dgs.*;
 import com.netflix.graphql.dgs.DgsMutation;
 import lombok.RequiredArgsConstructor;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,19 +24,38 @@ public class CustomerDataFetcher {
 //        Customer customer = dgsDataFetchingEnvironment.getSource();
 //        return customer.getAccounts();
 //    }
-//    @DgsQuery(field = "customers")
-//    public List<Customer> allCustomer(){
-//        return customerServices.customerList();
+    @DgsQuery(field = "customers")
+    public List<Customer> customers(){
+        return customerServices.customerList();
+    }
+
+    @DgsQuery(field = "customersById")
+    public Customer customersById(Long id){
+        return customerServices.findById(id);
+    }
+
+    @DgsMutation
+    public Customer createCustomer(CustomerInput input){
+        if(input == null) {
+            System.out.println("null null");
+        }
+        return customerServices.saveCustomer(input);
+    }
+
+    @DgsMutation
+    public Customer updateCustomer(Long id, CustomerEdit input){
+        if(input == null) {
+            System.out.println("null null");
+        }
+        return customerServices.editCustomer(id,input);
+    }
+
+//    @DgsMutation
+//    public Customer updateCustomer(Long id, @InputArgument("input") CustomerInput inputMap){
+//        return customerServices.saveCustomer(inputMap);
 //    }
 
-    @DgsData(parentType = "MutationResolver")
-    public Customer createCustomer(@InputArgument Map<Object, Object> input){
-        String customerInput1 = gson.toJson(input, Map.class);
-        System.out.println("customerInput1" + customerInput1);
-        CustomerInput customerInput2 = gson.fromJson(customerInput1, CustomerInput.class);
-        System.out.println("customerInput2" + customerInput2.getGender());
-        return customerServices.saveCustomer(customerInput2);
-    }
+
 
 
 }

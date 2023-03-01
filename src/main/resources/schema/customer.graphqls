@@ -1,9 +1,11 @@
-type QueryResolver {
+type Query {
 customers : [Customer]
+customersById(id:ID):Customer
 }
 
-type MutationResolver {
-    createCustomer(input : CustomerInput):Customer
+type Mutation {
+    createCustomer(input : CustomerInput):Customer,
+    updateCustomer(id:ID, input:CustomerEdit): Customer
 }
 type Customer {
     name: String,
@@ -20,6 +22,10 @@ type Account{
     accountStatus: AccountStatus
 }
 
+input CustomerEdit{
+    name: String,
+    gender: String
+}
 input CustomerInput{
     name: String,
     gender: String,
@@ -39,6 +45,6 @@ enum AccountStatus{
 }
 
 schema {
-    mutation: MutationResolver,
-    query: QueryResolver
+    mutation: Mutation,
+    query: Query
 }

@@ -1,9 +1,7 @@
 package com.example.demo.mappers;
 
-import com.example.demo.dto.AccountInput;
-import com.example.demo.dto.CustomerInput;
 import com.example.demo.entity.Account;
-import com.example.demo.entity.Customer;
+import com.example.demo.generated.types.AccountInput;
 import org.mapstruct.Mapper;
 
 import java.util.List;
