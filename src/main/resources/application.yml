@@ -1,7 +1,7 @@
 server:
   port: 8045
   servlet:
-    context-path: /api
+    context-path: /api-graphql-server
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/graphql?createDatabaseIfNotExist=true
